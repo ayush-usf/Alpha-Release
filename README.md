@@ -11,10 +11,10 @@ The objective of this project is to help the police department to gain insights 
  
 <center>  ![](images/sfpd.png>  </center>
 
-#### Overview
+### Overview
 Overall there will be four visualizations, created using different visualization techniques that will start with an abstract view. Further, it will add granularity to allow the police department to study patterns from the past and help them in predicting crime.
 
-#### Progress
+### Progress
 - Majorly, the data preprocessing have been looked upon.
  
 > P1: Compare the different regions of San Francisco to identity locations with high crime rate (total) for different years.
