@@ -3,13 +3,13 @@
 
 ### Background and Motivation: 
 
-The police officers work hard every day to keep our city safe. Despite the measures taken by the police department, the disturbing elements in the society keep on carrying out their deleterious deeds that disturbs the peace and tranquility of the community. 
 
-The objective of this project is to help the police department to gain insights about incidents carried out in the past and predict the crime based upon the patterns in dataset.
+The police officers at the San Francisco Police Department work hard every day to keep our city safe. Despite the measures taken by the police department, the disturbing elements in the society keep on carrying out their deleterious deeds that disturbs the peace and tranquility of the community. 
 
+![](images/sfpd.png)
 
- 
-<center>  ![](images/sfpd.png)  </center>
+The objective of this project is to help the police department to gain insights about incidents carried out in the past and predict the crime based upon the patterns in dataset. 
+
 
 ### Overview
 Overall there will be four visualizations, created using different visualization techniques that will start with an abstract view. Further, it will add granularity to allow the police department to study patterns from the past and help them in predicting crime.
@@ -40,3 +40,6 @@ Overall there will be four visualizations, created using different visualization
 
 - `(Week 2)` P2 Spread of crime across city with year/crime selection
 - `(Week 3)` P3: Crime Variation for multiple crime across different months for a year
+
+#### Roadblocks
+- Working with large dataset is not easy, different ways of filtration are being looked into.
