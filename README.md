@@ -17,18 +17,18 @@ Overall there will be four visualizations, created using different visualization
 ### Progress
 - Majorly, the data preprocessing have been looked upon.
  
-> P1: Compare the different regions of San Francisco to identity locations with high crime rate (total) for different years.
+#### P1: Compare the different regions of San Francisco to identity locations with high crime rate (total) for different years.
 
 - Yearwise filteration of data is in progress
 - A basic map has been created in d3js. 
 - Integration of data with visualization is in progress.
 - The visulization will be completed by the end of the week along with the hover support
  
-- Expected (Posted in Proposal)
+> Expected (Posted in Proposal)
 
 ![](images/crime_spread.png)
 
-- Current (Created in d3.js)
+> Current (Created in d3.js)
 
 ![](images/current.png)
 
