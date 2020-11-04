@@ -1,7 +1,7 @@
 ## Storytelling : Police Department Crime Reports (2003-2018)
-#### Ayush Arora
-#### aarora7@dons.usfca.edu
-#### https://github.com/ayush-usf/data-viz-final-project
+###### Name : Ayush Arora
+###### Email :aarora7@dons.usfca.edu
+###### Project Link : https://github.com/ayush-usf/data-viz-final-project
 
 ---
 ### Background and Motivation: 
