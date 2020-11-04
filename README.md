@@ -12,7 +12,7 @@ The objective of this project is to help the police department to gain insights 
 
 
 ### Overview
-Overall there will be four visualizations, created using different visualization techniques that will start with an abstract view. Further, it will add granularity to allow the police department to study patterns from the past and help them in predicting crime.
+Overall there will be four visualizations, created using different visualization techniques. We'll start with an abstract view in the first visuaization. Further, visualizations  will add granularity that will to allow the police department to study patterns from the past clearly and help them in predicting crime.
 
 ### Progress
 - Majorly, the data preprocessing have been looked upon.
