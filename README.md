@@ -28,7 +28,7 @@ Overall there will be four visualizations, created using different visualization
 
 - Locations with highest crime rate (Overall) in 2018 - (Created in d3.js)
 
-
+![](images/current.png)
 
 ---
 #### P2: Spread of crime across city with year/crime selection
