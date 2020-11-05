@@ -35,10 +35,12 @@ Overall there will be four visualizations, created using different visualization
 ![](images/current.png)
 
 ---
+#### P2: Spread of crime across city with year/crime selection
+![](images/assault_2013.png)
 
 ### Upcoming immediate milestones
 
-- `(Week 2)` P2 Spread of crime across city with year/crime selection
+- `(Week 3)` Tooltips for P1 and P2
 - `(Week 3)` P3: Crime Variation for multiple crime across different months for a year
 
 #### Roadblocks
