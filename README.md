@@ -26,11 +26,7 @@ Overall there will be four visualizations, created using different visualization
 
 ---
 
-- Expected (Posted in Proposal)
-
-![](images/crime_spread.png)
-
-- Current (Created in d3.js)
+- (Created in d3.js)
 
 ![](images/current.png)
 
