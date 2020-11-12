@@ -34,8 +34,6 @@ Overall there will be four visualizations, created using different visualization
 #### P2: Spread of crime across city with year/crime selection
 ![](images/assault_2018.png)
 
-> [Link to Visualization 2](viz_2.html)
-
 ### Upcoming immediate milestones
 
 - `(Week 3)` Tooltips for P1 to be added
