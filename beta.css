@@ -1,0 +1,50 @@
+div.sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    padding: 0px !important;
+    background-color: white;
+    padding-top: 50px;
+    display: inline;
+}
+
+.center {
+    margin: auto;
+    /*width: 50%;*/
+    /*border: 3px solid green;*/
+
+
+}
+.header {
+    padding: 10px;
+    font-weight: normal;
+    text-align: center;
+    border: 3px solid #e5cb1a;
+}
+
+#year_select{
+    padding: 7px;
+}
+#year_select, #year_label{
+    float: right;
+}
+
+
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+.axis--x path {
+    display: none;
+}
+.line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+}
+.legend{
+    cursor: pointer;
+}
