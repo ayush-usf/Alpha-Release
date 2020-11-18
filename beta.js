@@ -14,19 +14,17 @@ const map1LowestColor = '#ffedd8';
 const map1HighestColor = '#e0791f';
 
 const map1SvgWidth = 700
-const map1SvgHeight = 500
+const map1SvgHeight = 600
 
 const fixed_top_7 = ["LARCENY/THEFT", "ASSAULT", "DRUG/NARCOTIC", "VEHICLE THEFT", "VANDALISM", "BURGLARY", "ROBBERY"]
 let top_5;
 
-const map1Width = 960,
-    map1Height = 600,
-    map1Latitude = 37.7750,
+const map1Latitude = 37.7750,
     map1Longitude = -122.4183;
 
 let map1Svg = d3.select("#map_div").append("svg")
-    .attr("width", map1Width)
-    .attr("height", map1Height);
+    .attr("width", map1SvgWidth)
+    .attr("height", map1SvgHeight);
 
 // let map1g = map1Svg.append("g")
 //     .attr("id", "hoods")
@@ -35,7 +33,7 @@ let map1g = map1Svg.append("g")
     .attr("class", "map1-g")
 
 const map1Projection = d3.geoConicEqualArea()
-    .parallels([37.692514, 37.840699])
+    .parallels([map1Latitude, map1Longitude])
     .rotate([122, 0]);
 
 const map1Path = d3.geoPath().projection(map1Projection);
@@ -47,6 +45,7 @@ async function changeOverallYear(){
     d3.select("#multi_line_div svg").selectAll("path").remove("*")
     d3.select(".heatmap_svg").remove("*")
     d3.select(".m_line_svg").remove("*")
+    d3.select(".bar-svg").remove();
     await renderVisualizations(+year)
 }
 
@@ -264,10 +263,71 @@ async function renderVisualizations (selectedYear){
             });
 
         drawBarChart(crime_cases_count, top_15, selectedYear)
-        drawMultiLine(data,top_5)
+        // drawMultiLine(data,top_5)
         drawHeatMap(data,top_5)
-        drawSpreadMap(data,top_5,SFNGeojson)
+        // drawSpreadMap(data,top_5,SFNGeojson)
 
+
+        // reset legend
+        d3.select("body").selectAll("#maplegend").remove();
+
+        // add a legend
+        var legendwidth = 20,
+            legendheight = 400;
+
+        var legendsvg = d3.select("#map_div")
+            .append("svg")
+            .attr("width", legendwidth + 100)
+            .attr("height", legendheight)
+            .attr("id", "maplegend")
+            .attr("class", "legend");
+
+        var legend = legendsvg.append("defs")
+            .append("svg:linearGradient")
+            .attr("id", "gradient")
+            .attr("x1", "100%")
+            .attr("y1", "0%")
+            .attr("x2", "100%")
+            .attr("y2", "100%")
+            .attr("spreadMethod", "pad");
+
+        legend.append("stop")
+            .attr("offset", "0%")
+            .attr("stop-color", map1HighestColor)
+            .attr("stop-opacity", 1);
+
+        legend.append("stop")
+            .attr("offset", "100%")
+            .attr("stop-color", map1LowestColor)
+            .attr("stop-opacity", 1);
+
+        legendsvg.append("rect")
+            .attr("width", legendwidth)
+            .attr("height", legendheight)
+            .style("fill", "url(#gradient)")
+            .attr("transform", "translate(0,10)");
+
+        var y = d3.scaleLinear()
+            .range([legendheight, 0])
+            .domain([0, maxValMap1]);
+
+        var yAxis = d3.axisRight(y)
+            .tickFormat(function(d) {
+                return d + "%";
+            }).tickSizeOuter(0);
+
+        legendsvg.append("g")
+            .attr("class", "y axis")
+            .attr("transform", "translate(20,10)")
+            .call(yAxis)
+            .append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 30)
+            .attr("dy", ".71em")
+            // .attr("dy", "11.36px")
+            .style("text-anchor", "end")
+            .text("% Crime Rate(Missing person)")
+            .style("fill", "black");
 
     }
     catch (e){

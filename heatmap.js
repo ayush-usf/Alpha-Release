@@ -1,3 +1,7 @@
+// Tooltip :  https://bl.ocks.org/alandunning/274bf248fd0f362d64674920e85c1eb7
+let hMapTooltip;
+let hMapSvg;
+
 function drawHeatMap(data, top_5){
     const hrFormat = d3.timeFormat("%H")
     let plotData = [];
@@ -46,18 +50,17 @@ function drawHeatMapViz(data, min, max, top_5) {
     const margin = {top: 50, right: 50, bottom: 70, left: 150}
     const width = chartAreaWidth - margin.left - margin.right;
     const height = chartAreaHeight - margin.top - margin.bottom;
-
     // Tooltip :  https://bl.ocks.org/alandunning/274bf248fd0f362d64674920e85c1eb7
-    let tooltip = d3.select("#heatmap_div").append("div").attr("class", "toolTip");
+    hMapTooltip = d3.select("#heatmap_div").append("div").attr("class", "heatmap-tooltip");
 
     // Creating svg (canvas)
-        const svg = d3.select("#heatmap_div").append("svg")
+    hMapSvg = d3.select("#heatmap_div").append("svg")
             .attr("class", "heatmap_svg")
             .attr("width", width)
             .attr("height", height);
 
     // Creating groups
-        const g = svg.append("g")
+        const g = hMapSvg.append("g")
             .attr("transform", `translate(${margin.left}, ${margin.top} )`);
 
     const hrArr = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"];
@@ -197,13 +200,13 @@ function drawHeatMapViz(data, min, max, top_5) {
         .style("stroke", "none")
         .style("opacity", 0.8)
         .on("mousemove", function(event, d){
-            tooltip
+            hMapTooltip
                 .style("left", event.pageX - 100 + "px")
                 .style("top", event.pageY - 90 + "px")
                 .style("display", "inline-block")
-                .html("Airport: " + (d.variable) + "<br>Month: "+  d.group + "<br>Flights delayed Minutes: "+ (d.value));
+                .html("Crime Type: " + (d.variable) + "<br>Total Cases: "+ (d.value));
         })
-        .on("mouseout", function(d){ tooltip.style("display", "none");});
+        .on("mouseout", function(d){ hMapTooltip.style("display", "none");});
 
 
     // // Adding chart label

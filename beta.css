@@ -35,7 +35,7 @@ div.sticky {
     stroke: #000;
     shape-rendering: crispEdges;
 }
-.axis--x path {
+.mline-axis--x path {
     display: none;
 }
 .line {
@@ -78,3 +78,13 @@ div.sticky {
     width: auto;
 }
 
+.heatmap-tooltip {
+    position: absolute;
+    display: none;
+    min-width: 80px;
+    height: auto;
+    background: none repeat scroll 0 0 #ffffff;
+    border: 1px solid #6F257F;
+    padding: 14px;
+    text-align: center;
+}
