@@ -46,6 +46,7 @@ async function changeOverallYear(){
     d3.select(".heatmap_svg").remove("*")
     d3.select(".m_line_svg").remove("*")
     d3.select(".bar-svg").remove();
+    d3.select(".map1-legend").remove();
     await renderVisualizations(+year)
 }
 
@@ -263,9 +264,9 @@ async function renderVisualizations (selectedYear){
             });
 
         drawBarChart(crime_cases_count, top_15, selectedYear)
-        // drawMultiLine(data,top_5)
+        drawMultiLine(data,top_5)
         drawHeatMap(data,top_5)
-        // drawSpreadMap(data,top_5,SFNGeojson)
+        drawSpreadMap(data,top_5,SFNGeojson)
 
 
         // reset legend
@@ -280,7 +281,7 @@ async function renderVisualizations (selectedYear){
             .attr("width", legendwidth + 100)
             .attr("height", legendheight)
             .attr("id", "maplegend")
-            .attr("class", "legend");
+            .attr("class", "map1-legend");
 
         var legend = legendsvg.append("defs")
             .append("svg:linearGradient")

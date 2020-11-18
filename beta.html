@@ -89,7 +89,6 @@
 </head>
 <body>
 <div class="sticky">
-
     <h2 class="header">San Francisco Police Crime Data Report</h2>
 <!--    <label id="year_label">Year</label>-->
     <select name="cars" id="year_select" onchange="changeOverallYear()">
@@ -100,23 +99,22 @@
     </select>
 </div>
 <div class="center">
+    <h3 class="inner-header">Overall Crime Distribution across SF</h3>
+    <div id="map_div">
+        <div id="map1-tooltip-container"></div>
+    </div>
+    <h3 class="inner-header">Overall Crime Spread across SF for top 5 crime types</h3>
+    <div style="display: inline-block" id="map2_checkbox"></div>
+    <div id="map2_div"></div>
     <h3 class="inner-header"></h3>
     <div class="row">
         <div class="bar-column-left" style=""><div id="bar_div"></div></div>
         <div class="bar-column-right" style=""><div style="display: inline-block" id="bar_checkbox"></div></div>
     </div>
-    <h3 class="inner-header">Overall Crime Distribution across SF</h3>
-    <div id="map_div">
-        <div id="map1-tooltip-container"></div>
+    <h3 class="inner-header">Crime variation across different months</h3>
+    <div id="multi_line_div">
+        <div id='mline-tooltip' style='position:absolute;border-style: solid;border-width:1px;padding:5px;display: none'></div>
     </div>
-<!--    <h3 class="inner-header">Overall Crime Spread across SF for top 5 crime types</h3>-->
-<!--    <div style="display: inline-block" id="map2_checkbox"></div>-->
-<!--    <div id="map2_div"></div>-->
-
-<!--    <h3 class="inner-header">Crime variation across different months</h3>-->
-<!--    <div id="multi_line_div">-->
-<!--        <div id='mline-tooltip' style='position:absolute;border-style: solid;border-width:1px;padding:5px;display: none'></div>-->
-<!--    </div>-->
     <h3 class="inner-header">Hourly Crime Variation for Year </h3>
     <div id="heatmap_div"></div>
 </div>
