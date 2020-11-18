@@ -8,6 +8,7 @@
         {
             /*background:url('gray.jpg');*/
         }
+
         /*#tip {*/
         /*    display:none;*/
         /*    pointer-events: none;*/
@@ -100,11 +101,17 @@
 </div>
 <div class="center">
     <h3 class="inner-header">Overall Crime Distribution across SF</h3>
-    <div id="map_div"></div>
-    <h3 class="inner-header">Overall Crime Spread across SF</h3>
-    <div style="display: inline-block" id="map2_checkbox">
+    <div id="map_div">
+        <div id="map1-tooltip-container"></div>
     </div>
+    <h3 class="inner-header">Overall Crime Spread across SF for top 5 crime types</h3>
+    <div style="display: inline-block" id="map2_checkbox"></div>
     <div id="map2_div"></div>
+    <h3 class="inner-header"></h3>
+    <div class="row">
+        <div class="bar-column-left" style=""><div id="bar_div"></div></div>
+        <div class="bar-column-right" style=""><div style="display: inline-block" id="bar_checkbox"></div></div>
+    </div>
     <h3 class="inner-header">Crime variation across different months</h3>
     <div id="multi_line_div"></div>
     <h3 class="inner-header">Hourly Crime Variation for Year </h3>
@@ -116,10 +123,12 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
 <script type="text/javascript" src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="beta.js?v=0.0.0.2"></script>
 <script type="text/javascript" src="multiline.js?v=0.0.0.3"></script>
 <script type="text/javascript" src="heatmap.js?v=0.0.0.1"></script>
 <script type="text/javascript" src="map2.js?v=0.0.0.1"></script>
-<script type="text/javascript" src="beta.js"></script>
+<script type="text/javascript" src="bar_chart.js?v=0.0.0.3"></script>
 <link rel="stylesheet" type="text/css" href="beta.css">
 <link rel="stylesheet" type="text/css" href="map2.css">
+<link rel="stylesheet" type="text/css" href="bar.css">
 </html>

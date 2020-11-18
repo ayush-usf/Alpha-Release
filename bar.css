@@ -1,0 +1,52 @@
+#bar_div rect {
+    fill: steelblue;
+    fill-opacity: 0.7;
+}
+#bar_div rect:hover {
+    fill-opacity: 1;
+}
+.bar-toolTip {
+    position: absolute;
+    display: none;
+    min-width: 80px;
+    height: auto;
+    background: none repeat scroll 0 0 #ffffff;
+    border: 1px solid #6F257F;
+    padding: 14px;
+    text-align: center;
+}
+.bar-chart-label{
+    font-weight: bolder;
+    font-size: 18px;
+    text-anchor: middle;
+}
+
+.bar_checkbox_span{
+    padding: 10px;
+}
+
+
+.bar-checkbox{
+    width: 20px;
+    position: relative;
+}
+
+.row {
+    content: "";
+    display: inline-block;
+    clear: both;
+    width: 100%;
+}
+
+.bar-column-left {
+    float: left;
+    width: 79%;
+    padding: 10px;
+    display: inline;
+}
+.bar-column-right {
+    float: left;
+    width: 16%;
+    padding: 10px;
+    display: inline;
+}

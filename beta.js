@@ -82,6 +82,7 @@ async function renderVisualizations (selectedYear){
         let sorted = Object.keys(crime_cases_count).sort((a, b) => crime_cases_count[b] - crime_cases_count[a]);
 
         top_5 = sorted.slice(0, 5);
+        top_15 = sorted.slice(0, 25);
         let top5_sum = 0
         let top_5_crimes_dict = {}
         let categoryUrl = " AND ( "
@@ -99,6 +100,8 @@ async function renderVisualizations (selectedYear){
         console.log("top_5_crimes",top_5_crimes);
         console.log("Top 5 crime cases count",top5_sum);
         console.log("categoryUrl",categoryUrl);
+
+        const map1tip = map1g.append("text").attr("id", "map1tooltip");
 
         const crimeDataUrl = dataSetUrl + limitUrl  + dateUrl + categoryUrl
 
@@ -167,8 +170,8 @@ async function renderVisualizations (selectedYear){
                 // Stroring data for tooltips and annotation
                 const district = i.properties.district
                 i.properties["total"] = districtCrimeCountObj[district]
-                // i.properties["top5_p"] = districtCrimeTop5PercentObj[district]
-                // i.properties["overall_p"] = districtCrimePercentObj[district]
+                i.properties["top5_p"] = districtCrimeTop5PercentObj[district]
+                i.properties["overall_p"] = districtCrimePercentObj[district]
                 // console.log("i",i);
             })
         }
@@ -177,7 +180,7 @@ async function renderVisualizations (selectedYear){
         // Ref: data-viz-assignment-8 - g.selectAll("*").remove();
         map1g.selectAll("path").remove();
 
-        const basemap = map1Svg.append("g").selectAll("path.land")
+        const map1Viz = map1Svg.append("g").selectAll("path.land")
             .data(map1geoJson.features)
             .enter()
             .append("path")
@@ -185,14 +188,14 @@ async function renderVisualizations (selectedYear){
             .attr("class", "land")
             .style("fill", function(d) {
                 return map1Scale(d.properties.total)
-            });
+            })
 
-        map1Svg.append("g").selectAll("path.neighborhood")
+        map1Svg.append("g").selectAll("path.outline")
             .data(map1geoJson.features)
             .enter()
             .append("path")
             .attr("d", map1Path)
-            .attr("class", "neighborhood")
+            .attr("class", "outline")
             .style("fill", function(d) {
                 return map1Scale(d.properties.total)
             })
@@ -202,101 +205,69 @@ async function renderVisualizations (selectedYear){
                 // save selection in data for interactivity
                 // saves search time finding the right outline later
                 d.properties.outline = this;
+            })
+            .on("mousemove", function(d,e) {
+
+                let newLabel = e.properties.district
+                // Ref: https://bl.ocks.org/dnprock/b48388ee8bc5582947b6
+                let html = "";
+                html += "<div class=\"tooltip_kv\">";
+                html += "<span class=\"tooltip_header\">";
+                html +=  newLabel.charAt(0) + newLabel.substr(1,e.properties.district.length).toLowerCase() + " district";
+                html += "</span>";
+                html += "</div>";
+                html += "<div class=\"tooltip_kv\">";
+                html += "<span class='tooltip_key'>";
+                html += "Total Cases Reported";
+                html += "</span>";
+                html += "<span class=\"tooltip_value\">";
+                html += e.properties.total;
+                html += "</span>";
+                html += "</div>";
+                html += "<div class=\"tooltip_kv\">";
+                html += "<span class='tooltip_key'>";
+                html += "Total Crime Cases Share";
+                html += "</span>";
+                html += "<span class=\"tooltip_value\">";
+                html += e.properties.overall_p.toFixed(2) + "%";
+                html += "</span>";
+                html += "</div>";
+                html += "<div class=\"tooltip_kv\">";
+                html += "<span class='tooltip_key'>";
+                html += "Top 5 Crime Share";
+                html += "</span>";
+                html += "<span class=\"tooltip_value\">";
+                html += e.properties.top5_p.toFixed(2) + "%";
+                html += "</span>";
+                html += "</div>";
+
+                $("#map1-tooltip-container").html(html);
+                $(this).attr("fill-opacity", "0.7");
+                $("#map1-tooltip-container").show();
+
+                const map_width = $('#map_div')[0].getBoundingClientRect().width;
+
+                if (d.layerX < map_width / 2) {
+                    d3.select("#map1-tooltip-container")
+                        .style("top", (d.layerY + 15) + "px")
+                        .style("left", (d.layerX + 15) + "px");
+                } else {
+                    var tooltip_width = $("#map1-tooltip-container").width();
+                    d3.select("#map1-tooltip-container")
+                        .style("top", (d.layerY + 15) + "px")
+                        .style("left", (d.layerX - tooltip_width - 30) + "px");
+                }
+            })
+            .on("mouseout", function() {
+                $(this).attr("fill-opacity", "1.0");
+                $("#map1-tooltip-container").hide();
             });
 
+        drawBarChart(crime_cases_count, top_15, selectedYear)
         drawMultiLine(data,top_5)
         drawHeatMap(data,top_5)
         drawSpreadMap(data,top_5,SFNGeojson)
 
-        // add highlight
-        basemap.on("mouseover.highlight", function(d) {
-            d3.select(d.properties.outline).raise();
-            d3.select(d.properties.outline).classed("active", true);
-        })
-            .on("mouseout.highlight", function(d) {
-                d3.select(d.properties.outline).classed("active", false);
-            });
-
-        // add tooltip
-        basemap.on("mouseover.tooltip", function(d) {
-            tip.text(d.properties.district);
-            tip.style("visibility", "visible");
-            showLabel(d, year);
-        })
-            .on("mousemove.tooltip", function(d) {
-                const coords = d3.mouse(g.basemap.node());
-                tip.attr("x", coords[0]);
-                tip.attr("y", coords[1]);
-                moveLabel();
-            })
-            .on("mouseout.tooltip", function(d) {
-                tip.style("visibility", "hidden");
-                hideLabel();
-            });
-
-        basemap.on("click", function(d) {
-            clicked(d, filtereddataset, year);
-        });
-
-        // reset legend
-        d3.select("body").selectAll("#maplegend").remove();
-
-        // add a legend
-        var legendwidth = 20,
-            legendheight = 300;
-
-        var legendsvg = d3.select("body").select("#map1_div")
-            .append("svg")
-            .attr("width", legendwidth + 100)
-            .attr("height", legendheight)
-            .attr("id", "maplegend")
-            .attr("class", "legend");
-
-        var legend = legendsvg.append("defs")
-            .append("svg:linearGradient")
-            .attr("id", "gradient")
-            .attr("x1", "100%")
-            .attr("y1", "0%")
-            .attr("x2", "100%")
-            .attr("y2", "100%")
-            .attr("spreadMethod", "pad");
-
-        legend.append("stop")
-            .attr("offset", "0%")
-            .attr("stop-color", highColor)
-            .attr("stop-opacity", 1);
-
-        legend.append("stop")
-            .attr("offset", "100%")
-            .attr("stop-color", lowColor)
-            .attr("stop-opacity", 1);
-
-        legendsvg.append("rect")
-            .attr("width", legendwidth)
-            .attr("height", legendheight)
-            .style("fill", "url(#gradient)")
-            .attr("transform", "translate(0,10)");
-
-        var y = d3.scaleLinear()
-            .range([legendheight, 0])
-            .domain([0, maxVal]);
-
-        var yAxis = d3.axisRight(y)
-            .tickFormat(function(d) {
-                return d + "%";
-            }).tickSizeOuter(0);
-
-        legendsvg.append("g")
-            .attr("class", "y axis")
-            .attr("transform", "translate(20,10)")
-            .call(yAxis)
-            .append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 30)
-            .attr("dy", ".71em")
-            .style("text-anchor", "end")
-            .text("% Crime Rate(Missing person)")
-            .style("fill", "black");
 
     }
     catch (e){

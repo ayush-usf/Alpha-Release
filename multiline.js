@@ -1,4 +1,5 @@
-// https://ayusharora.me/data-viz-assignment-8/
+// Ref :  https://ayusharora.me/data-viz-assignment-8/
+
 function drawMultiLine(data, top_5){
     data['columns'] = top_5.concat('date')
     // getting month from date - https://stackoverflow.com/questions/58594065/d3js-v4-get-month-and-year
@@ -39,7 +40,7 @@ function drawMultiLine(data, top_5){
     
     // console.log("plotData",plotData);
 
-    const mLineSvgWidth = screen.width - 20
+    const mLineSvgWidth = screen.width - 120
     const mLineSvgHeight = 500
 
     const margin = {top: 20, right: 80, bottom: 30, left: 50},

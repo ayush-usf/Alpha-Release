@@ -34,11 +34,11 @@ function drawHeatMap(data, top_5){
             plotData.push({group:hour, value:Math.round(val1), variable:key})
         })
     })
-    drawBarChart(plotData, min, max, top_5);
+    drawHeatMapViz(plotData, min, max, top_5);
 }
 
 // Rendering the bar chart
-function drawBarChart(data, min, max, top_5) {
+function drawHeatMapViz(data, min, max, top_5) {
 
     const chartAreaHeight = 400
     const chartAreaWidth = 1350
