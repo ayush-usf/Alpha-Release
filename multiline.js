@@ -14,9 +14,7 @@ let mLineSvg = d3.select("#multi_line_div").append("svg")
     .attr("width", mLineSvgWidth)
     .attr("height", mLineSvgHeight);
 
-let mLineg = mLineSvg.append("g")
-    .attr("class", "mLine-g")
-    .attr("transform", `translate(${mLineMargin.left}, ${mLineMargin.top})`);
+let mLineg;
 
 // http://bl.ocks.org/wdickerson/64535aff478e8a9fd9d9facccfef8929
 const mlineTooltip = d3.select('#mline-tooltip');
@@ -30,6 +28,11 @@ let mLine_x = d3.scaleTime().range([0, mLineWidth]),
     mLineColor = d3.scaleOrdinal(d3.schemeCategory10);
 
 function drawMultiLine(data, top_5){
+
+    mLineg = mLineSvg.append("g")
+        .attr("class", "mLine-g")
+        .attr("transform", `translate(${mLineMargin.left}, ${mLineMargin.top})`);
+
     data['columns'] = top_5.concat('date')
     // getting month from date - https://stackoverflow.com/questions/58594065/d3js-v4-get-month-and-year
     const formatMonth = d3.timeFormat('%b');

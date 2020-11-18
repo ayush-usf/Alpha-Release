@@ -43,9 +43,12 @@ async function changeOverallYear(){
     const year = document.getElementById("year_select").value;
     d3.select("#map_div svg").selectAll("path").remove("*")
     d3.select("#map2_div svg").selectAll("path").remove("*")
-    d3.select("#multi_line_div svg").selectAll("path").remove("*")
+    // d3.select("#multi_line_div svg").selectAll("path").remove("*")
     d3.select(".heatmap_svg").remove("*")
-    d3.select(".m_line_svg").remove("*")
+    // d3.select(".mLine-g").remove("*")
+    mLineSvg.selectAll("*").remove();
+    mLineg.selectAll("text").remove();
+    mLineg.selectAll("rect").remove();
     d3.select(".bar-svg").remove();
     d3.select(".map1-legend").remove();
     $('.top_header').html("")
