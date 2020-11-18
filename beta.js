@@ -37,6 +37,7 @@ const map1Projection = d3.geoConicEqualArea()
     .rotate([122, 0]);
 
 const map1Path = d3.geoPath().projection(map1Projection);
+let districtCrimeGroup;
 
 async function changeOverallYear(){
     const year = document.getElementById("year_select").value;
@@ -76,7 +77,9 @@ async function renderVisualizations (selectedYear){
                 return ;
             crime_cases_count[key]=val
         })
-        console.log("Total crime cases count",totalCrimeCasesForYr);
+
+        $('.top_header').html(`Total Crime Cases reported in Year ${selectedYear}:`)
+        $('.top_header_span').html(totalCrimeCasesForYr)
 
         console.log("crime_cases_count",crime_cases_count);
         let sorted = Object.keys(crime_cases_count).sort((a, b) => crime_cases_count[b] - crime_cases_count[a]);
@@ -98,10 +101,14 @@ async function renderVisualizations (selectedYear){
         let top_5_crimes = top_5.join(", ")
         console.log("top_5_crimes_dict",top_5_crimes_dict);
         console.log("top_5_crimes",top_5_crimes);
+
+        $('.top_header_top_5_crime').html(`Top 5 reported crimes:`)
+        $('.top_header_span_top_5_crime').html(top_5_crimes)
+
         console.log("Top 5 crime cases count",top5_sum);
         console.log("categoryUrl",categoryUrl);
 
-        const map1tip = map1g.append("text").attr("id", "map1tooltip");
+        map1g.append("text").attr("id", "map1tooltip");
 
         const crimeDataUrl = dataSetUrl + limitUrl  + dateUrl + categoryUrl
 
@@ -112,7 +119,7 @@ async function renderVisualizations (selectedYear){
 
         // const crime_groups = d3.group(input_data, d => d.category)
         // Grouping district, category wise, Merging all the cases with same Incident Numbers
-        const districtCrimeGroup = d3.rollup(data,
+        districtCrimeGroup = d3.rollup(data,
                             v=>v.length,
                             d=> d.pddistrict, // group 1
                             d => d.category);  // group 2
@@ -172,7 +179,12 @@ async function renderVisualizations (selectedYear){
                 i.properties["total"] = districtCrimeCountObj[district]
                 i.properties["top5_p"] = districtCrimeTop5PercentObj[district]
                 i.properties["overall_p"] = districtCrimePercentObj[district]
-                // console.log("i",i);
+                let k = 1;
+                for (let [key, value] of districtCrimeGroup.get(district)) {
+                    i.properties["crime_key"+k] = key
+                    i.properties["crime_val"+k] = value
+                    k++
+                }
             })
         }
 
@@ -240,6 +252,20 @@ async function renderVisualizations (selectedYear){
                 html += e.properties.top5_p.toFixed(2) + "%";
                 html += "</span>";
                 html += "</div>";
+                html += "<br>";
+                html += "Distribution";
+                html += "<hr>";
+                for (let k = 1; k<=5;k++) {
+                    let newLabel = e.properties["crime_key"+k]
+                    html += "<div class=\"tooltip_kv\">";
+                    html += "<span class='tooltip_key'>";
+                    html += newLabel.charAt(0) + newLabel.substr(1,e.properties["crime_key"+k].length).toLowerCase();
+                    html += "</span>";
+                    html += "<span class=\"tooltip_value\">";
+                    html += e.properties["crime_val"+k];
+                    html += "</span>";
+                    html += "</div>";
+                }
 
                 $("#map1-tooltip-container").html(html);
                 $(this).attr("fill-opacity", "0.7");
