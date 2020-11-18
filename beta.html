@@ -12,8 +12,17 @@
 </head>
 <body>
 <div class="sticky">
-    <h2 class="header">San Francisco Police Crime Data Report</h2>
-<!--    <label id="year_label">Year</label>-->
+    <div class="header" style="
+    height: 44px;
+    vertical-align: center;">
+        <h2 style="
+    display: inline;
+    vertical-align: center;">San Francisco Police Crime Data Report</h2>
+        <img src="images/sfpd.png" width="40px" style="
+    float: right;
+    display: inline;">
+    </div>
+
     <select name="cars" id="year_select" onchange="changeOverallYear()">
         <option value="2014">2014</option>
         <option value="2015">2015</option>
@@ -68,9 +77,6 @@
 
         </div>
     </div>
-
-
-
 
     <h2 class="inner-header" id="m_line_div">Crime variation across different months (Top 5 Crimes)</h2>
     <div id="multi_line_div">

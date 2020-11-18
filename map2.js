@@ -8,13 +8,12 @@ const map2Width = 960,
 
 let map2Svg = d3.select("#map2_div").append("svg")
     .attr("width", map2Width)
-    .attr("height", map2Height);
+    .attr("height", map2Height)
+    .attr("class","map2-svg");
 
-let map2g = map2Svg.append("g")
-    .attr("id", "hoods")
+let map2g;
 
-let circles = map2Svg.append("g")
-    .attr("id", "circles");
+let circles;
 
 let groupData;
 let map2Colors = ['#1f77b4','#ff7f0e','#50fd50','#bcbd22','red']
@@ -31,6 +30,11 @@ let path = d3.geoPath().projection(proj);
 function drawSpreadMap(data, top_5, SFNGeojson){
 
     try{
+
+        map2g = map2Svg.append("g")
+            .attr("id", "hoods")
+        circles = map2Svg.append("g")
+            .attr("id", "circles");
 
         data = data.slice(0,10000)
 

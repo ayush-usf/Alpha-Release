@@ -24,6 +24,7 @@ div.sticky {
 
 #year_select{
     padding: 7px;
+    margin-top: 10px;
 }
 #year_select, #year_label{
     float: right;

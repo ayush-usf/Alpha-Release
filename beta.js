@@ -5,6 +5,7 @@ let crime_groups;
 // const limit = 150
 const limit = 100000
 // const limit = 23000
+let allYearsData = {}
 
 let selectedYear = 2014
 const dataSetUrl = "https://data.sfgov.org/resource/tmnf-yvry.json?"
@@ -45,10 +46,10 @@ async function changeOverallYear(){
     d3.select("#map2_div svg").selectAll("path").remove("*")
     // d3.select("#multi_line_div svg").selectAll("path").remove("*")
     d3.select(".heatmap_svg").remove("*")
-    // d3.select(".mLine-g").remove("*")
+    d3.select(".map2-svg #hoods").remove("*")
+    d3.select(".map2-svg #circles").remove("*")
     mLineSvg.selectAll("*").remove();
-    mLineg.selectAll("text").remove();
-    mLineg.selectAll("rect").remove();
+
     d3.select(".bar-svg").remove();
     d3.select(".map1-legend").remove();
     $('.top_header').html("")
@@ -131,9 +132,12 @@ async function renderVisualizations (selectedYear){
         const crimeDataUrl = dataSetUrl + limitUrl  + dateUrl + categoryUrl
 
         // Getting all the data with filtering
-        const data = await d3.json(crimeDataUrl)
-        // console.log("data",data);
-
+        let data;
+        if(allYearsData[selectedYear]){
+            data = allYearsData[selectedYear]
+        }
+        else
+            data = await d3.json(crimeDataUrl)
 
         // const crime_groups = d3.group(input_data, d => d.category)
         // Grouping district, category wise, Merging all the cases with same Incident Numbers

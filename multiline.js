@@ -28,7 +28,7 @@ let mLine_x = d3.scaleTime().range([0, mLineWidth]),
     mLineColor = d3.scaleOrdinal(d3.schemeCategory10);
 
 function drawMultiLine(data, top_5){
-
+    mLinePlotData = []
     mLineg = mLineSvg.append("g")
         .attr("class", "mLine-g")
         .attr("transform", `translate(${mLineMargin.left}, ${mLineMargin.top})`);
