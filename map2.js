@@ -88,7 +88,7 @@ function drawMap2(map2FilterData){
     let color = Object.values(colorDict)
     let active = Object.keys(colorDict)
 
-    let tip = d3.select('#tip')
+    let tip = d3.select('#map2-tip')
     let lpic = d3.select('#lpic')
 
 
@@ -118,6 +118,7 @@ function drawMap2(map2FilterData){
         });
 
     let index = 0;
+    let index2 = 0;
     for(let [key,value] of Object.entries(map2FilterData)){
         if(value == true){
             groupData.get(key).forEach((row)=>{
@@ -125,12 +126,19 @@ function drawMap2(map2FilterData){
                 row.lon = parseFloat(row.x)
                 let sub = proj([row.lon,row.lat])
                 sub.push(map2Colors[index])
+                sub.push(row.pddistrict)
+                sub.push(row.address)
+                sub.push(row.date.substring(0,10))
+                sub.push(row.time)
+                sub.push(color[index2])
+                sub.push(key)
                 positions.push(sub);
                 // positions.push(proj([row.lon,row.lat]),)
                 form_add.push(row.descript)
                 title.push(row.category)
                 lonlat.push([row.lon,row.lat])
             })
+            index2++;
         }
         index++;
     }
@@ -158,49 +166,65 @@ function drawMap2(map2FilterData){
         })
         .on("mouseover",function(d,i){
             d3.select(this).style("fill"," lawngreen")
-                .transition(100).attr('r',10)
+                .transition(100).attr('r',20)
             //d3.select(circles).circle.style('fill','lawngreen')
             cy = this.cy.baseVal.value;
             // console.log(form_add[i]);
-            tip.style('display','block')
-                .style('left', 650 + 'px')
-                .style('top', 30 + 'px')
-            //.select(".hoods").text(form_add[i])  //form_add[i];})
-            //.select("#tip .zip").text(function(){return 'Vertigo';})
-            //.select('img').attr("src",'http://imgc.allpostersimages.com/images/P-473-488-90/56/5667/H35UG00Z/posters/dirty-harry-italian-style.jpg')
 
-            //tip.select(".hoods").text(form_add[i]);
+            tip.style('display','inline-block')
+                .style('left', event.pageX - 50 + "px")
+                .style('top', event.pageY - 70 + "px")
+                .style('text-align', "left")
+                .html(i[3] + " district<hr>Address: " +i[4]+ "<br><br>Date: " +i[5]+ "<br>Time: " +i[6])
 
             circles.selectAll("circle")
-                .style("fill", function(){
+                .style("fill", function(d){
+                    // if(this.id == d[8])
                     if(this.id == title[i])
                         //this.parentNode.appendChild(this);
-                        return "red";
-                    else
                         return "orange" ;
+                    else
+                        return d[7];
                 })
-                .transition(100).attr("r", function(){
+                .transition(100).attr("r", function(d){
+                // if(this.id == d[8])
                 if(this.id == title[i])
-                    return 10
+                    return 8
                 else
                     return 2.5;
             })
-                .transition(100).attr(
-                "r",function(){
-                    if(this.id == title[i])
-                        return 4.5;
-                    else
-                        return 2.5;});
+                // .transition(100).attr(
+                // "r",function(d){
+                // //     if(this.id == d[8])
+            // if(this.id == title[i])
+                //         return 4.5;
+                //     else
+                //         return 2.5;});
             //.sort(this.id == title[i]);
             //.parentNode.appendChild(this);
             //element.parentNode.appendChild(element)
             // circles.selectAll("circle .vertigo").style("fill","lawngreen");
         })
-        .on("mouseout",function(){
-            d3.select(this).style("fill","red").transition(100).attr('r',4.5)
-            tip.style('display', 'none');
-            lpic.style('display', 'none');
-            // circles.selectAll('circle').transition(100).attr("r",3);
+        .on("mouseout",function(d,i){
+            circles.selectAll("circle")
+                .transition()
+                .delay(1000)
+                .duration(1000)
+            .style("fill", function(d){
+                return d[7];
+            })
+
+            // d3.select(this).transition()
+            //     .delay(500)
+            //     .duration(500)
+            //     .style("fill",i[7]);
+            d3.selectAll(this.id).transition(100).attr('r',4.5)
+            tip.transition()
+                .delay(5000)
+                .duration(1000)
+                .style('display', 'none');
+            // lpic.style('display', 'none');
+            circles.selectAll('circle').transition(100).attr("r",2.5);
         });
 }
 

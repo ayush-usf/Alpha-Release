@@ -8,83 +8,6 @@
             height: 100%;
         }
 
-        /*#tip {*/
-        /*    display:none;*/
-        /*    pointer-events: none;*/
-        /*    position: absolute;*/
-        /*    !*background: url('gray.png');*!*/
-        /*    -moz-border-radius: 5px;*/
-        /*    border-radius: 5px;*/
-        /*    padding: 10px 10px 10px 7px;*/
-        /*    color: white;*/
-        /*    z-index: 1337;*/
-        /*    width: 300px;*/
-        /*    !*   text-align: left;*!*/
-        /*}*/
-
-        /*#tip .zip {*/
-        /*    margin-left: 5px;*/
-        /*    font-size: 20px;*/
-        /*    line-height: 22px;*/
-        /*}*/
-
-        /*#tip .ziphead {*/
-        /*    margin-left: 5px;*/
-        /*    font-size: 20px;*/
-        /*    font-family: Arial, Verdana, sans-serif;*/
-        /*    color:palegreen;*/
-        /*    line-height: 22px;*/
-        /*}*/
-
-        /*#tip .zipdir {*/
-        /*    margin-left: 5px;*/
-        /*    font-size: 15 px;*/
-        /*    line-height: 16px;*/
-        /*}*/
-
-        /*#tip .zipactors {*/
-        /*    margin-left: 5px;*/
-        /*    font-size: 15px;*/
-        /*    font-style: italic;*/
-        /*    line-height: 18px;*/
-        /*}*/
-
-
-        /*#tip .ziprating {*/
-        /*    color: tomato;*/
-        /*    margin-left: 5px;*/
-        /*    font-size: 15px;*/
-        /*    line-height: 18px;*/
-        /*}*/
-        /*#tip img{*/
-        /*    float:left;*/
-        /*    width: 130px;*/
-        /*    margin-right: 10px;*/
-        /*}*/
-
-        /*#lpic {*/
-        /*    display: none;*/
-        /*    pointer-events: none;*/
-        /*    position: absolute;*/
-        /*    !*background: url('gray.png');*!*/
-        /*    -moz-border-radius: 5px;*/
-        /*    border-radius: 5px;*/
-        /*    padding: 10px 10px 10px 7px;*/
-        /*    color: white;*/
-        /*    z-index: 1337;*/
-        /*    width: 280px;*/
-        /*    text-align: left;*/
-        /*}*/
-
-        /*#lpic .hoods {*/
-        /*    margin-bottom: 10px;*/
-        /*    font-style: italic;*/
-        /*    margin-left: 10px;*/
-        /*}*/
-
-        /*#lpic img {*/
-        /*    width: 280px;*/
-        /*}*/
     </style>
 </head>
 <body>
@@ -99,36 +22,64 @@
     </select>
 </div>
 <div class="center">
-    <center><div style="display: inline-block;">
-        <h3 class="top_header" style="display: inline"></h3>
-        <span style="display: inline" class="top_header_span"></span>
-    </div>
-    </center>
-    <br>
-    <center><div style="display: inline-block;">
-        <h3 class="top_header_top_5_crime" style="display: inline"></h3>
-        <span style="display: inline" class="top_header_span_top_5_crime"></span>
-    </div>
-    </center>
 
 
-    <h3 class="inner-header">Overall Crime Distribution across SF</h3>
-    <div id="map_div">
-        <div id="map1-tooltip-container"></div>
-    </div>
-    <h3 class="inner-header">Overall Crime Spread across SF for top 5 crime types</h3>
-    <div style="display: inline-block" id="map2_checkbox"></div>
-    <div id="map2_div"></div>
     <h3 class="inner-header"></h3>
-    <div class="row">
+    <div class="row" id="bar_div_main">
         <div class="bar-column-left" style=""><div id="bar_div"></div></div>
         <div class="bar-column-right" style=""><div style="display: inline-block" id="bar_checkbox"></div></div>
     </div>
-    <h3 class="inner-header">Crime variation across different months</h3>
+
+    <h2 class="inner-header" id="map2_div_main">Overall Crime Spread across SF for top 5 crime types</h2>
+    <div class="row" id="map1_div_main">
+        <div class="map1-column-left" style="">
+            <div style="display: inline-block" id="map2_checkbox"></div>
+            <div id="map2_div">
+                <div id="map2-tip"></div>
+            </div>
+        </div>
+        <div class="map1-column-right" style="">
+            <div style="display: inline-block;">
+                <h3 class="top_header" style="display: inline"></h3>
+                <span style="display: inline" class="top_header_span"></span>
+            </div>
+            <br>
+            <br>
+            <div style="">
+                <h3 class="top_header_top_5_crime" style=""></h3>
+                <span style="" class="top_header_span_top_5_crime"></span>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row" id="map12_div_main">
+        <div class="map1-column-left" style="">
+            <h2 class="inner-header">District wise Crime Distribution across SF</h2>
+            <div id="map_div">
+                <div id="map1-tooltip-container"></div>
+            </div>
+        </div>
+        <div class="map1-column-right2" style="">
+            <div style="">
+                <h3 class="top_header_top_5_crime2" style=""></h3>
+                <span style="" class="top_header_span_top_5_crime2"></span>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+    <h2 class="inner-header" id="m_line_div">Crime variation across different months (Top 5 Crimes)</h2>
     <div id="multi_line_div">
         <div id='mline-tooltip' style='position:absolute;border-style: solid;border-width:1px;padding:5px;display: none'></div>
     </div>
-    <h3 class="inner-header">Hourly Crime Variation for Year </h3>
+
+
+
+    <h2 class="inner-header" id="heatmap_div_main">Hourly Crime Variation for Year </h2>
     <div id="heatmap_div"></div>
 </div>
 
@@ -137,10 +88,10 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
 <script type="text/javascript" src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript" src="beta.js?v=0.0.0.2"></script>
+<script type="text/javascript" src="beta.js?v=0.0.0.3"></script>
 <script type="text/javascript" src="multiline.js?v=0.0.0.7"></script>
 <script type="text/javascript" src="heatmap.js?v=0.0.0.1"></script>
-<script type="text/javascript" src="map2.js?v=0.0.0.1"></script>
+<script type="text/javascript" src="map2.js?v=0.0.0.3"></script>
 <script type="text/javascript" src="bar_chart.js?v=0.0.0.3"></script>
 <link rel="stylesheet" type="text/css" href="beta.css">
 <link rel="stylesheet" type="text/css" href="map2.css">

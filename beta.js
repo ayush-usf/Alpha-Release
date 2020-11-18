@@ -10,7 +10,7 @@ let selectedYear = 2014
 const dataSetUrl = "https://data.sfgov.org/resource/tmnf-yvry.json?"
 const aggFilterUrl = "&$select=category,COUNT(category)&$group=category"
 const limitUrl = `$limit=${limit}`
-const map1LowestColor = '#ffedd8';
+const map1LowestColor = '#f1e4d6';
 const map1HighestColor = '#e0791f';
 
 const map1SvgWidth = 700
@@ -48,6 +48,9 @@ async function changeOverallYear(){
     d3.select(".m_line_svg").remove("*")
     d3.select(".bar-svg").remove();
     d3.select(".map1-legend").remove();
+    $('.top_header').html("")
+    $('.top_header_top_5_crime').html("")
+    $('.top_header_span').html("")
     await renderVisualizations(+year)
 }
 
@@ -78,10 +81,6 @@ async function renderVisualizations (selectedYear){
             crime_cases_count[key]=val
         })
 
-        $('.top_header').html(`Total Crime Cases reported in Year ${selectedYear}:`)
-        $('.top_header_span').html(totalCrimeCasesForYr)
-
-        console.log("crime_cases_count",crime_cases_count);
         let sorted = Object.keys(crime_cases_count).sort((a, b) => crime_cases_count[b] - crime_cases_count[a]);
 
         top_5 = sorted.slice(0, 5);
@@ -99,11 +98,27 @@ async function renderVisualizations (selectedYear){
         })
         categoryUrl += ")"
         let top_5_crimes = top_5.join(", ")
-        console.log("top_5_crimes_dict",top_5_crimes_dict);
-        console.log("top_5_crimes",top_5_crimes);
+
+        $('.top_header').html(`Total Crime Cases reported in year ${selectedYear}:`).show()
+        $('.top_header_span').html(totalCrimeCasesForYr).delay( 2000 ).show()
+        // $('#viz3').html(` (${selectedYear})`)
+        $('#heatmap_div_main').html(`Hourly Crime Variation for Year ${selectedYear}:`).show()
+
+
+        let ulMarkup = `<ul>`;
+        top_5.forEach(i=>{
+            ulMarkup += `<li class="crime_li"><b>${i}:</b> ${top_5_crimes_dict[i]}</li>`
+        })
+        ulMarkup+=`</ul>`
 
         $('.top_header_top_5_crime').html(`Top 5 reported crimes:`)
-        $('.top_header_span_top_5_crime').html(top_5_crimes)
+        $('.top_header_top_5_crime').delay( 2000 ).fadeIn( 2000 ).show()
+
+
+        $('.top_header_span_top_5_crime').html(ulMarkup)
+        $('.top_header_span_top_5_crime').delay( 2000 ).fadeIn( 3000 ).show()
+
+        $(".top_header_span_top_5_crime").animate({"margin-right": '+=50'});
 
         console.log("Top 5 crime cases count",top5_sum);
         console.log("categoryUrl",categoryUrl);
@@ -134,6 +149,15 @@ async function renderVisualizations (selectedYear){
         const districtCrimeCountObj = Array.from(districtCrimeCount).reduce((districtCrimeCountObj, [key, value]) => (
             Object.assign(districtCrimeCountObj, { [key]: value })
         ), {})
+
+        let ulMarkup2 = `<ul>`;
+        Object.keys(districtCrimeCountObj).forEach(i=>{
+            ulMarkup2 += `<li class="crime_li"><b>${i}:</b> ${districtCrimeCountObj[i]}</li>`
+        })
+        ulMarkup2+=`</ul>`
+        $('.top_header_top_5_crime2').html(`District Wise Reports Count:`)
+        $('.top_header_span_top_5_crime2').html(ulMarkup2)
+
         console.log("districtCrimeCountObj",districtCrimeCountObj);
         let districtCrimePercentObj = {}
         let districtCrimeTop5PercentObj = {}
@@ -151,8 +175,9 @@ async function renderVisualizations (selectedYear){
         let dataToPlotMap1 = Object.values(districtCrimeCountObj)
         let minValMap1 = d3.min(dataToPlotMap1)
         let maxValMap1 = d3.max(dataToPlotMap1)
+        let maxValMap2 = d3.max(Object.values(districtCrimePercentObj))
 
-        // d3.schemeBlues TODO
+        // d3.schemeBlues
         let map1Scale = d3.scaleLinear()
                     .domain([minValMap1, maxValMap1])
                     .range([map1LowestColor, map1HighestColor])
@@ -192,12 +217,12 @@ async function renderVisualizations (selectedYear){
         // Ref: data-viz-assignment-8 - g.selectAll("*").remove();
         map1g.selectAll("path").remove();
 
-        const map1Viz = map1Svg.append("g").selectAll("path.land")
+        const map1Viz = map1Svg.append("g").selectAll("path.main-geo")
             .data(map1geoJson.features)
             .enter()
             .append("path")
             .attr("d", map1Path)
-            .attr("class", "land")
+            .attr("class", "main-geo")
             .style("fill", function(d) {
                 return map1Scale(d.properties.total)
             })
@@ -278,7 +303,7 @@ async function renderVisualizations (selectedYear){
                         .style("top", (d.layerY + 15) + "px")
                         .style("left", (d.layerX + 15) + "px");
                 } else {
-                    var tooltip_width = $("#map1-tooltip-container").width();
+                    let tooltip_width = $("#map1-tooltip-container").width();
                     d3.select("#map1-tooltip-container")
                         .style("top", (d.layerY + 15) + "px")
                         .style("left", (d.layerX - tooltip_width - 30) + "px");
@@ -289,27 +314,35 @@ async function renderVisualizations (selectedYear){
                 $("#map1-tooltip-container").hide();
             });
 
-        drawBarChart(crime_cases_count, top_15, selectedYear)
-        drawMultiLine(data,top_5)
-        drawHeatMap(data,top_5)
-        drawSpreadMap(data,top_5,SFNGeojson)
+        // $('#m_line_div').appear(function() {
+            drawMultiLine(data,top_5)
+        // });
+        // $('#bar_div_main').appear(function() {
+            drawBarChart(crime_cases_count, top_15, selectedYear)
+        // });
 
+        // $('#heatmap_div_main').appear(function() {
+            drawHeatMap(data,top_5)
+        // });
+        // $('#map2_div_main').appear(function() {
+            drawSpreadMap(data,top_5,SFNGeojson)
+        // });
 
         // reset legend
-        d3.select("body").selectAll("#maplegend").remove();
+        d3.select("body").selectAll("#map1_legend").remove();
 
         // add a legend
-        var legendwidth = 20,
+        let legendwidth = 20,
             legendheight = 400;
 
-        var legendsvg = d3.select("#map_div")
+        let legendsvg = d3.select("#map_div")
             .append("svg")
             .attr("width", legendwidth + 100)
             .attr("height", legendheight)
-            .attr("id", "maplegend")
+            .attr("id", "map1_legend")
             .attr("class", "map1-legend");
 
-        var legend = legendsvg.append("defs")
+        let legend = legendsvg.append("defs")
             .append("svg:linearGradient")
             .attr("id", "gradient")
             .attr("x1", "100%")
@@ -334,11 +367,11 @@ async function renderVisualizations (selectedYear){
             .style("fill", "url(#gradient)")
             .attr("transform", "translate(0,10)");
 
-        var y = d3.scaleLinear()
+        let y = d3.scaleLinear()
             .range([legendheight, 0])
-            .domain([0, maxValMap1]);
+            .domain([0, maxValMap2]);
 
-        var yAxis = d3.axisRight(y)
+        let yAxis = d3.axisRight(y)
             .tickFormat(function(d) {
                 return d + "%";
             }).tickSizeOuter(0);
@@ -350,10 +383,9 @@ async function renderVisualizations (selectedYear){
             .append("text")
             .attr("transform", "rotate(-90)")
             .attr("y", 30)
-            .attr("dy", ".71em")
-            // .attr("dy", "11.36px")
+            .attr("dy", "11px")
             .style("text-anchor", "end")
-            .text("% Crime Rate(Missing person)")
+            .text("Crime Rate (%)")
             .style("fill", "black");
 
     }

@@ -5,3 +5,28 @@
 #map2_div{
     margin-top: 25px;
 }
+
+/*#map2-tip {*/
+/*    display:none;*/
+/*    pointer-events: none;*/
+/*    position: absolute;*/
+/*    -moz-border-radius: 5px;*/
+/*    border-radius: 5px;*/
+/*    padding: 10px 10px 10px 7px;*/
+/*    color: white;*/
+/*    z-index: 1337;*/
+/*    width: 300px;*/
+/*    !*   text-align: left;*!*/
+/*}*/
+
+#map2-tip {
+    position: absolute;
+    display: none;
+    min-width: 80px;
+    r-events: none;
+    height: auto;
+    background: none repeat scroll 0 0 #ffffff;
+    border: 1px solid #6F257F;
+    padding: 14px;
+    text-align: center;
+}
