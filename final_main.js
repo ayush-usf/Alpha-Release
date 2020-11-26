@@ -144,7 +144,7 @@ async function renderVisualizations (selectedYear){
         }
         data = allYearsData[selectedYear]
 
-        drawMultiLine(data,top_5[selectedYear])
+        drawMultiLine(data,top_5[selectedYear],selectedYear)
         drawBarChart(crime_cases_count[selectedYear], top_25[selectedYear], selectedYear)
         drawHeatMap(data,top_5[selectedYear],selectedYear)
         drawSpreadMap(data,top_5[selectedYear],SFNGeojson)

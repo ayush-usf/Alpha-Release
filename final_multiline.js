@@ -1,7 +1,7 @@
 // Ref :  https://ayusharora.me/data-viz-assignment-8/
 let multi_zoom;
 let multiZoomRect;
-
+let monthCrimeGroup = {}
 const mLineSvgWidth = screen.width - 80
 const mLineSvgHeight = 500
 
@@ -9,10 +9,7 @@ const mLineMargin = {top: 20, right: 80, bottom: 30, left: 100},
     mLineWidth = mLineSvgWidth - mLineMargin.left - mLineMargin.right,
     mLineHeight = mLineSvgHeight - mLineMargin.top - mLineMargin.bottom;
 
-let mLineSvg = d3.select("#multi_line_div").append("svg")
-    .attr("class", "m_line_svg")
-    .attr("width", mLineSvgWidth)
-    .attr("height", mLineSvgHeight);
+let mLineSvg = d3.select(".m_line_svg");
 
 let mLineg;
 
@@ -27,23 +24,22 @@ let mLine_x = d3.scaleTime().range([0, mLineWidth]),
     mLine_y = d3.scaleLinear().range([mLineHeight, 0]),
     mLineColor = d3.scaleOrdinal(d3.schemeCategory10);
 
-function drawMultiLine(data, top_5){
+function drawMultiLine(data, top_5, selectedYear){
     mLinePlotData = []
     mLineg = mLineSvg.append("g")
         .attr("class", "mLine-g")
-        .attr("transform", `translate(${mLineMargin.left}, ${mLineMargin.top})`);
+        .attr("transform", `translate(0, ${mLineMargin.top})`);
 
     data['columns'] = top_5.concat('date')
     // getting month from date - https://stackoverflow.com/questions/58594065/d3js-v4-get-month-and-year
-    const formatMonth = d3.timeFormat('%b');
-    const monthCrimeGroup = d3.rollup(data,
-        v=>v.length,
-        // d => formatMonth(new Date(d.date)), // group 1
-        d=> d.category, // group 1
-        d => d.date); // group 1
+    if(!monthCrimeGroup[selectedYear])
+        monthCrimeGroup[selectedYear] = d3.rollup(data,
+            v=>v.length,
+            d=> d.category, // group 2
+            d => d.date); // group 1
 
-    let parseTime = d3.timeParse("%Y%m%d")
-    monthCrimeGroup.forEach((value,key) => {
+
+    monthCrimeGroup[selectedYear].forEach((value,key) => {
         // console.log(value,key)
         let innerData = []
         for(let [key2, val2] of value) {
