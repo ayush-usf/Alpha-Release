@@ -262,7 +262,7 @@ async function renderVisualizations (selectedYear){
                 html += "Total Cases Reported";
                 html += "</span>";
                 html += "<span class=\"tooltip_value\">";
-                html += e.properties.total;
+                html += numberFormat(e.properties.total);
                 html += "</span>";
                 html += "</div>";
                 html += "<div class=\"tooltip_kv\">";
@@ -291,7 +291,7 @@ async function renderVisualizations (selectedYear){
                     html += newLabel.charAt(0) + newLabel.substr(1,e.properties["crime_key"+k].length).toLowerCase();
                     html += "</span>";
                     html += "<span class=\"tooltip_value\">";
-                    html += e.properties["crime_val"+k];
+                    html += numberFormat(e.properties["crime_val"+k]);
                     html += "</span>";
                     html += "</div>";
                 }
