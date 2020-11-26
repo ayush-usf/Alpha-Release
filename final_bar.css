@@ -1,0 +1,96 @@
+#bar_div rect {
+    fill: steelblue;
+    fill-opacity: 0.7;
+}
+#bar_div rect:hover {
+    fill-opacity: 1;
+}
+.bar-toolTip {
+    position: absolute;
+    display: none;
+    min-width: 80px;
+    height: auto;
+    background: none repeat scroll 0 0 #ffffff;
+    border: 1px solid #6F257F;
+    padding: 14px;
+    text-align: center;
+}
+.bar-chart-label{
+    font-weight: bolder;
+    font-size: 28px;
+    text-anchor: middle;
+}
+
+.topic_heading{
+    margin-top: 40px;
+    margin-left: 100px;
+}
+
+.bar_checkbox_span{
+    padding: 1px;
+}
+
+.bar_checkbox_span *{
+    margin-bottom: 0rem !important;
+}
+
+
+.bar-checkbox{
+    width: 20px;
+    position: relative;
+}
+
+.jumbotron {
+    width: 100%;
+    margin-bottom: 0px;
+}
+
+.first_container{
+    margin-top: 60px;
+}
+
+.bar-column-left {
+    float: left;
+    width: 79%;
+    padding: 10px;
+    display: inline;
+}
+.bar-column-right {
+    float: left;
+    width: 17%;
+    padding: 10px;
+    display: inline;
+}
+
+.map1-column-left {
+    float: left;
+    width: 70%;
+    display: inline;
+}
+.map1-column-right {
+    float: left;
+    width: 30%;
+    display: inline;
+    margin-top: 200px;
+}
+
+.map1-column-right2, .map1-column-right21 {
+    float: left;
+    width: 30%;
+    display: inline;
+}
+.map1-column-right2 {
+    margin-top: 300px;
+}
+.map1-column-right21 {
+    margin-top: 200px;
+}
+.crime_li{
+    padding: 10px;
+}
+
+.inner-header{
+    margin-left: 200px;
+    margin-top: 70px;
+    margin-bottom: 70px;
+}

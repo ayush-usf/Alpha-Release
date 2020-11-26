@@ -1,0 +1,250 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <title>Police Department Crime Reports</title>
+    <style>
+        .division .league {
+            display: inline-block;
+        }
+
+        .division  .teams {
+            fill: none;
+            stroke: #bfbfbf;
+        }
+
+        .division .axis line,
+        .division .axis path {
+            fill: none;
+            stroke: #000;
+            stroke-opacity: .05;
+            shape-rendering: crispEdges;
+        }
+
+        .division .tick.major line {
+            stroke: steelblue;
+        }
+
+        .division .x.axis .tick text  {
+            display: none;
+        }
+
+        .division .x.axis .tick.major text {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark navbar-default fixed-top">
+    <img src="images/sfpd.png" width="40px" style="float: right;display: inline;">
+    <a class="navbar-brand" style="margin-left: 20px" href="#">San Francisco Police Crime Data Report</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#" style="font-size: 12px;margin-top: 15px;margin-left: -13px;">
+                    <i class="fa fa-home"></i>
+                    *Works best on Safari
+                    <span class="sr-only badge-primary">(current)</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="#" style="font-size: 20px;">
+                    <div id="year_selected" style="text-align: center;color: white; margin-left: 100px;font-weight: bold">Year : 2014</div>
+                    <span class="sr-only badge-primary">(current)</span>
+                </a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown active" style="margin-right: 38px;">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Release
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" target="_blank" href="/data-viz-final-project/">Alpha</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" target="_blank" href="/data-viz-final-project/beta.html">Beta</a>
+                    </div>
+                </li>
+            </ul>
+
+            <label style="color: wheat;">Select Year : &nbsp;&nbsp;</label>
+            <select name="cars" id="year_select" onchange="changeOverallYear()">
+                <option value="2014">2014</option>
+                <option value="2015">2015</option>
+                <option value="2016">2016</option>
+                <option value="2017">2017</option>
+            </select>
+        </form>
+    </div>
+</nav>
+
+<main role="main" class="row">
+    <div class="jumbotron first_load">
+        <div class="container">
+            <h4 style="font-weight: bold;">Background and Motivation</h4>
+            <p class="lead1">The police officers at the San Francisco Police Department work hard every day to keep our city safe.
+            <p class="lead1">Despite the measures taken by the police department, the disturbing elements in the society keep on carrying out their deleterious deeds that disturbs the peace and tranquility of the community.</p>
+            <ul><li>The <b>objective</b> of this project is to <b>help the police department to gain insights</b> about incidents carried out in the past and predict the crime based upon the patterns from the dataset.</li></ul></p>
+        </div>
+    </div>
+</main>
+<div class="center">
+    <div style="display: inline-block;" class="topic_heading">
+        <hr width="100%"  align="left">
+        <h3 class="top_header" style="display: inline">Total Crime Cases reported :</h3>&nbsp;
+        <br><br>
+        <div class="row" style="text-align: center">
+            <div class="col-md-6">
+                <h3 class="" style="display: inline">2014 :</h3>&nbsp;
+                <span style="display: inline;font-size: 40px;"  class="top_header_span"></span>
+            </div>
+            <div class="col-md-6">
+                <h3 class="" style="display: inline">2015 :</h3>&nbsp;
+                <span style="display: inline;font-size: 40px;"  class="top_header_span_2015"></span>
+            </div>
+            <div class="col-md-6">
+                <h3 class="" style="display: inline">2016 :</h3>&nbsp;
+                <span style="display: inline;font-size: 40px;"  class="top_header_span_2016"></span>
+            </div>
+            <div class="col-md-6">
+                <h3 class="" style="display: inline">2017 :</h3>&nbsp;
+                <span style="display: inline;font-size: 40px;"  class="top_header_span_2017"></span>
+            </div>
+        </div>
+
+        <hr width="100%"  align="left">
+    </div>
+    <div class="container first_container topic_heading">
+        <h3 id="crime_prcnt" style="margin-bottom: 30px">Different crime types by percentage for 2014:</h3>
+    </div>
+    <div class="container first_container topic_heading">
+        <div class="row stats_parent">
+        </div>
+    </div>
+    <div class="topic_heading">
+        <hr width="85%"  align="left">
+        <h3 style="">Let us look at the frequency of Top 25 Crime types:</h3>
+        <h6 style="color: #818a03;"><b>Note:</b>&nbsp;Choose the crime type on the right to add it to the visualization</h6>
+    </div>
+
+    <h3 class="inner-header"></h3>
+    <div class="row" id="bar_div_main">
+        <div class="bar-column-left" style="">
+            <div id="bar_div">
+                <svg height="600" class="bar-svg"></svg>
+            </div>
+        </div>
+        <div class="bar-column-right" style="">
+            <div style="display: inline-block" id="bar_checkbox"></div>
+        </div>
+    </div>
+
+    <div class="row topic_heading" id="map12_div_main">
+        <div class="map1-column-left" style="">
+            <hr width="120%"  align="left">
+            <h3 class="">District wise Crime Data Distribution</h3>
+            <div id="map_div">
+                <div id="map1-tooltip-container"></div>
+            </div>
+        </div>
+        <div class="map1-column-right21" style="">
+            <span style="" class="top_header_span_top_5_crime2"></span>
+        </div>
+    </div>
+
+    <div class="topic_heading">
+        <hr width="85%"  align="left">
+        <h3 style="margin-bottom: 10px">Overall Crime Spread across SF for top 5 crime types</h3>
+        <h6 style="color: #818a03;margin-bottom: 30px"><b>Note:</b>&nbsp;Choose the crime type to visualize the spread of crime type.</h6>
+        <div class="row" id="map1_div_main">
+            <div class="map1-column-left" style="">
+                <div style="display: inline-block" id="map2_checkbox"></div>
+                <div id="map2_div">
+                    <svg class="map2-svg" height="600" width="960"></svg>
+                    <div id="map2-tip"></div>
+                </div>
+            </div>
+            <div class="map1-column-right" style="">
+                <br>
+                <br>
+                <div style="">
+                    <h4 class="top_header_top_5_crime" style="">Top 5 reported crimes:</h4>
+                    <span style="" class="top_header_span_top_5_crime"></span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="topic_heading">
+        <hr width="85%"  align="left">
+        <h3 style="">Crime variation across different months for all regions (Top 5 Crimes):</h3>
+        <h6 style="color: #818a03;margin-top: 10px;"><b>Note:</b>&nbsp;Highlight and select crime types on the right for brushing/hiding crime types</h6>
+    </div>
+
+    <div id="multi_line_div" style="margin-top: 20px;">
+        <div id='mline-tooltip'
+             style='position:absolute;border-style: solid;border-width:1px;padding:5px;display: none'></div>
+    </div>
+
+<!--    <div class="topic_heading">-->
+<!--        <hr width="85%"  align="left">-->
+<!--        <h3 style="">District wise Crime variation across different months (Top 5 Crimes):</h3>-->
+<!--        <h6 style="color: #818a03;margin-top: 10px;"><b>Note:</b>&nbsp;Highlight and select crime types on the right for brushing/hiding crime types</h6>-->
+<!--        <div id='small-multiples'>-->
+<!--&lt;!&ndash;            <div class="league"></div>&ndash;&gt;-->
+<!--        </div>-->
+<!--&lt;!&ndash;        <div id='small-multiples' style="height: 798px"></div>&ndash;&gt;-->
+<!--        <script type='text/javascript' src="final_small_multiples.js?v=0.0.2"></script>-->
+
+<!--    </div>-->
+
+    <div class="topic_heading">
+        <hr width="85%"  align="left">
+        <h3 style="" id="heatmap_div_main">Hourly Crime Variation for Year</h3>
+        <h6 style="color: #818a03;margin-top: 10px;;margin-bottom: 10px;"><b>Note:</b>&nbsp;Highlight on each block to get crime count for that hour</h6>
+        <div id="heatmap_div">
+            <div class="heatmap-tooltip"></div>
+            <svg class="heatmap_svg" height="380" width="1150"></svg>
+        </div>
+    </div>
+</div>
+<a class="btn" data-toggle="modal" href="#myModal" id="modal-open-button" style="display: none" >Launch Modal</a>
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Note</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>The visualizations depicts <b>per year</b> crime distribution in San Francisco <b>from 2014 till 2018</b>, as depicted by the SFPD records.</p>
+                <p>The <b>year selector</b> <img src="images/year_selector.png"> &nbsp; on <b>top right</b> of screen dynamically changes all the visualizations w.r.t the selected year.</p>
+                <button id="close_button" style="float: right;" type="submit" class="btn btn-warning">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="d3.v6.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
+<script type="text/javascript" src="final_main.js?v=0.0.0.4"></script>
+<script type="text/javascript" src="final_multiline.js?v=0.0.0.7"></script>
+<script type="text/javascript" src="final_heatmap.js?v=0.0.0.1"></script>
+<script type="text/javascript" src="final_map2.js?v=0.0.0.3"></script>
+<script type="text/javascript" src="final_bar_chart.js?v=0.0.0.3"></script>
+<link rel="stylesheet" type="text/css" href="final_map2.css">
+<link rel="stylesheet" type="text/css" href="final_bar.css">
+<link rel="stylesheet" type="text/css" href="final_beta.css">
+<script type='text/javascript' src="final_small_multiples.js?v=0.0.2"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap" rel="stylesheet">
+</body>
+</html>

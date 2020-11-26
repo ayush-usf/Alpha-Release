@@ -1,0 +1,96 @@
+body {
+    min-height: 75rem;
+    padding-top: 4.5rem;
+    height: 100%;
+    font-family: 'Roboto', sans-serif !important;
+}
+
+
+.center {
+    margin: auto;
+    /*width: 50%;*/
+    /*border: 3px solid green;*/
+}
+.header {
+    padding: 10px;
+    font-weight: normal;
+    text-align: center;
+    border: 3px solid #e5cb1a;
+}
+
+#year_select{
+    padding: 7px;
+}
+#year_select, #year_label{
+    float: right;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+.mline-axis--x path {
+    display: none;
+}
+.line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+}
+.legend{
+    cursor: pointer;
+}
+
+
+#map1-tooltip-container {
+    position: absolute;
+    background-color: #fff;
+    color: #000;
+    padding: 10px;
+    border: 1px solid;
+    display: none;
+    width: 280px;
+}
+.tooltip_kv{
+    display: flex;
+    justify-content: space-between;
+}
+
+.note1{
+    font-weight: bold;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+.tooltip_key {
+    font-weight: bold;
+    font-size: 15px
+}
+
+.tooltip_header {
+    font-size: 20px
+}
+
+.tooltip_value {
+    /*margin-left: 13px;*/
+    float: right;
+}
+
+.option-select {
+    margin-top: 20px;
+    margin-left: 40px;
+    fill: #64b646;
+    width: auto;
+}
+
+.heatmap-tooltip {
+    position: absolute;
+    display: none;
+    min-width: 80px;
+    height: auto;
+    background: none repeat scroll 0 0 #ffffff;
+    border: 1px solid #6F257F;
+    padding: 14px;
+    text-align: center;
+}
