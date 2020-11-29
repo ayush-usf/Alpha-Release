@@ -541,7 +541,7 @@ function createDistrictCrimeCountObj(selectedYear){
 }
 
 $(document).ready(function(){
-    // $("#myModal").modal('show');
+    $("#myModal").modal('show');
     $('#close_button').click(function(e) {
         e.preventDefault();
         $('#myModal').modal('toggle'); //or  $('#IDModal').modal('hide');
