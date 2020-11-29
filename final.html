@@ -10,7 +10,7 @@
             display: inline-block;
         }
 
-        .division  .teams {
+        .division .teams {
             fill: none;
             stroke: #bfbfbf;
         }
@@ -21,10 +21,6 @@
             stroke: #000;
             stroke-opacity: .05;
             shape-rendering: crispEdges;
-        }
-
-        .division .tick.major line {
-            stroke: steelblue;
         }
 
         .division .x.axis .tick text  {
@@ -147,7 +143,7 @@
         </div>
     </div>
 
-    <div class="row topic_heading" id="map12_div_main">
+    <div class="row topic_heading" id="map12_div_main" style="margin-bottom: 100px">
         <div class="map1-column-left" style="">
             <hr width="120%"  align="left">
             <h3 class="">District wise Crime Data Distribution (Top 5 %)</h3>
@@ -192,27 +188,25 @@
         <h6 style="color: #818a03;margin-top: 10px;"><b>Note:</b>&nbsp;Highlight and select crime types on the right for brushing/hiding crime types</h6>
     </div>
 
-    <div id="multi_line_div" style="margin-top: 20px;">
-        <svg class="m_line_svg" width="1360" height="500" style="margin-left: 50px;"></svg>
+    <div id="multi_line_div" style="margin-top: 20px;margin-left: 100px;">
+        <svg class="m_line_svg" width="1360" height="500" style=""></svg>
     </div>
 
-<!--    <div class="topic_heading">-->
-<!--        <hr width="85%"  align="left">-->
-<!--        <h3 style="">District wise Crime variation across different months (Top 5 Crimes):</h3>-->
-<!--        <h6 style="color: #818a03;margin-top: 10px;"><b>Note:</b>&nbsp;Highlight and select crime types on the right for brushing/hiding crime types</h6>-->
-<!--        <div id='small-multiples'>-->
-<!--&lt;!&ndash;            <div class="league"></div>&ndash;&gt;-->
-<!--        </div>-->
-<!--&lt;!&ndash;        <div id='small-multiples' style="height: 798px"></div>&ndash;&gt;-->
-<!--        <script type='text/javascript' src="final_small_multiples.js?v=0.0.2"></script>-->
+    <div class="topic_heading">
+        <hr width="85%"  align="left">
+        <h3 style="">Quarterly District wise Crime variation (Top 5 Crimes):</h3>
+        <h6 style="color: #818a03;margin-top: 10px;margin-bottom: 30px"><b>Note:</b>&nbsp;Highlight and select crime types on the right for brushing/hiding crime types</h6>
+        <svg style="width: 800px;height: 20px;margin-left: 260px" id="sm_legend_svg"></svg>
+        <div id='small-multiples' style="height: 700px;margin-top: 25px;">
+        </div>
 
-<!--    </div>-->
+    </div>
 
     <div class="topic_heading">
         <hr width="85%"  align="left">
         <h3 style="" id="heatmap_div_main">Hourly Crime Variation (Top 5 crimes)</h3>
         <h6 style="color: #818a03;margin-top: 10px;;margin-bottom: 10px;"><b>Note:</b>&nbsp;Highlight on each block to get crime count for that hour</h6>
-        <div id="heatmap_div">
+        <div id="heatmap_div" style="margin-top: 30px;">
             <div class="heatmap-tooltip"></div>
             <svg class="heatmap_svg" height="380" width="1150"></svg>
         </div>
@@ -236,7 +230,7 @@
 </div>
 <script type="text/javascript" src="d3.v6.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
-<script type="text/javascript" src="final_main.js?v=0.0.0.4"></script>
+<script type="text/javascript" src="final_main.js?v=0.0.0.5"></script>
 <script type="text/javascript" src="final_multiline.js?v=0.0.0.7"></script>
 <script type="text/javascript" src="final_heatmap.js?v=0.0.0.1"></script>
 <script type="text/javascript" src="final_map2.js?v=0.0.0.3"></script>
@@ -244,7 +238,7 @@
 <link rel="stylesheet" type="text/css" href="final_map2.css">
 <link rel="stylesheet" type="text/css" href="final_bar.css">
 <link rel="stylesheet" type="text/css" href="final_beta.css">
-<script type='text/javascript' src="final_small_multiples.js?v=0.0.2"></script>
+<script type='text/javascript' src="final_small_multiples_old.js?v=0.0.3"></script>
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap" rel="stylesheet">
 </body>

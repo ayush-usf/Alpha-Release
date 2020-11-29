@@ -13,7 +13,7 @@ let map2g;
 let circles;
 
 let groupData;
-let map2Colors = ['#1f77b4','#ff7f0e','#50fd50','#bcbd22','red']
+let map2Colors = ['#88b3d0','#e2b48b','#91ea91','#d9d98c','#d08888']
 
 // https://observablehq.com/@d3/conic-equal-area
 const proj =  d3.geoConicEqualArea()

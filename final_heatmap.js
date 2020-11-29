@@ -67,8 +67,8 @@ function drawHeatMapViz(data, min, max, top_5) {
 
     // Ref (Heatmap) : https://www.d3-graph-gallery.com/graph/heatmap_style.html
     const myColor = d3.scaleSequential()
-        .interpolator(d3.interpolateOrRd)
-        .domain([min,max])
+        .interpolator(d3.interpolateReds)
+        .domain([min,max*1.2])
 
     const defs = g.append("defs");
 

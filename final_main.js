@@ -31,7 +31,7 @@ const limitUrl = `$limit=${limit}`
 
 // Map 1 - Choropleth
 const map1LowestColor = '#f1e4d6';
-const map1HighestColor = '#e0791f';
+const map1HighestColor = '#ef9a4f';
 const map1SvgWidth = 700
 const map1SvgHeight = 600
 const map1Latitude = 37.7750,
@@ -64,6 +64,8 @@ async function changeOverallYear(){
     d3.select("#map_div svg").selectAll("path").remove("*")
     d3.select("#map2_div svg").selectAll("path").remove("*")
     d3.select(".heatmap_svg").selectAll('g').remove("*")
+    d3.select("#sm_legend_svg").selectAll('g').remove("*")
+    d3.select("#small-multiples").selectAll('svg').remove("*")
     d3.select(".map2-svg #hoods").remove("*")
     d3.select(".map2-svg #circles").remove("*")
     mLineSvg.selectAll("*").remove();
@@ -148,8 +150,7 @@ async function renderVisualizations (selectedYear){
         drawBarChart(crime_cases_count[selectedYear], top_25[selectedYear], selectedYear)
         drawHeatMap(data,top_5[selectedYear],selectedYear)
         drawSpreadMap(data,top_5[selectedYear],SFNGeojson)
-        drawSmallMultiples(data)
-
+        drawSmallMultiples(data,top_5[selectedYear],selectedYear)
 
         // Grouping district, category wise, Merging all the cases with same Incident Numbers
         if(!districtCrimeGroup[selectedYear]){
@@ -540,7 +541,7 @@ function createDistrictCrimeCountObj(selectedYear){
 }
 
 $(document).ready(function(){
-    $("#myModal").modal('show');
+    // $("#myModal").modal('show');
     $('#close_button').click(function(e) {
         e.preventDefault();
         $('#myModal').modal('toggle'); //or  $('#IDModal').modal('hide');

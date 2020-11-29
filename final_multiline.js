@@ -13,16 +13,13 @@ let mLineSvg = d3.select(".m_line_svg");
 
 let mLineg;
 
-// http://bl.ocks.org/wdickerson/64535aff478e8a9fd9d9facccfef8929
-const mlineTooltip = d3.select('#mline-tooltip');
-const mlineTooltipLine = mLineSvg.append('line');
-let mLineTipBox;
-
 let mLinePlotData = []
 
 let mLine_x = d3.scaleTime().range([0, mLineWidth]),
     mLine_y = d3.scaleLinear().range([mLineHeight, 0]),
-    mLineColor = d3.scaleOrdinal(d3.schemeCategory10);
+    // mLineColor = d3.scaleOrdinal(d3.schemeCategory10);
+    mLineColor = d3.scaleOrdinal(d3.schemeSet2);
+    // mLineColor = d3.scaleOrdinal(d3.schemeSet3);
 
 function drawMultiLine(data, top_5, selectedYear){
     mLinePlotData = []
@@ -49,7 +46,6 @@ function drawMultiLine(data, top_5, selectedYear){
                 count : val2
             })
         }
-        // console.log("value",value);
 
         innerData = innerData.sort(sortByDateAscending);
 
@@ -216,52 +212,6 @@ function drawMultiLine(data, top_5, selectedYear){
 
             filterData[id]=!filterData[id];
             drawChart(filterData);
-        }
-
-        function removeTooltip(d,e) {
-            if (mlineTooltip) mlineTooltip.style('display', 'none');
-            if (mlineTooltipLine) mlineTooltipLine.attr('stroke', 'none');
-        }
-
-        function drawTooltip(event,e) {
-            console.log("d3.pointer(event)[0]",d3.pointer(event)[0]);
-
-            var date = mLine_x.invert(d3.pointer(event)[1])
-            // const year2 = Math.floor((mLine_x.invert(d3.mouse(tipBox.node())[0]) + 5) / 10) * 10;
-
-            // mLinePlotData.sort((a, b) => {
-            //     return b.values.find(h => h.date == date).count - a.values.find(h => h.date == date).count;
-            // })
-
-            mLinePlotData.sort((a, b) => {
-                return b.values.find(h => {
-                    return h.date.toDateString() == date.toDateString()
-                }).count - a.values.find(h => {
-                    return h.date.toDateString() == date.toDateString()
-                }).count;
-            })
-
-            mlineTooltipLine.attr('stroke', 'black')
-                .attr('x1', mLine_x(date))
-                .attr('x2', mLine_x(date))
-                .attr('y1', 0)
-                .attr('y2', mLineHeight);
-
-            mlineTooltip.html(date.toDateString())
-                .style('display', 'block')
-                .style('left', event.pageX + 20)
-                .style('top', event.pageY - 20)
-                .selectAll()
-                .data(mLinePlotData).enter()
-                .append('div')
-                .style('color', d => {
-                    return (mLineColor(d.id))
-                })
-                // .html(d => d.name + ': ' + d.history.find(h => h.year == date).population);
-                .html(d =>{
-                    let count = d.values.find(h => h.date.toDateString() == date.toDateString()).count
-                    return d.id.charAt(0) + d.id.substr(1,d.id.length).toLowerCase() + ": " + count
-                });
         }
     }
     drawChart(filterData);
